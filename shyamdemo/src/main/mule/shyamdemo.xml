@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="4b3df690-1f6f-4274-b956-679245069572" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="shyamdemoFlow" doc:id="ae5e2999-1cc8-4dbd-868d-667e3c1f95c9" >
+		<http:listener doc:name="Listener" doc:id="a47bcfa1-6fff-4dd5-b009-4cb54c6dfde6" config-ref="HTTP_Listener_config" path="/shyamdemo"/>
+		<logger level="INFO" doc:name="Logger" doc:id="98c6cee9-7b65-4549-bcda-843bed7bbb9f" message="flow started"/>
+		<set-variable value="Shyamuu" doc:name="userName" doc:id="1117b6bf-7f57-4619-9943-a0af7bc3d010" variableName="userName"/>
+		<logger level="INFO" doc:name="Logger" doc:id="0a9868e7-22ba-4069-95b5-79db778f8b43" message="variable done"/>
+		<set-variable value="25" doc:name="Age" doc:id="f9378609-9739-4918-b92d-4364b131a07e" variableName="age"/>
+		<logger level="INFO" doc:name="Logger" doc:id="d2c73359-2d91-4c56-bbfb-acfe1c051666" message="another variable done "/>
+		<flow-ref doc:name="Flow Reference" doc:id="ef29c914-c3ca-4556-a800-ad384a89ba9c" name="shyamdemoSub_Flow"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6b98c614-6487-463a-bc35-5fccfc0f98e4" message="flow ended"/>
+	</flow>
+	<sub-flow name="shyamdemoSub_Flow" doc:id="c9a0f42a-5eda-470d-ac76-311470324b92" >
+		<set-payload value='#["Welcome " ++ vars.userName]' doc:name="Set Payload" doc:id="717a8117-5ebd-4563-9723-49a55932254b" />
+	</sub-flow>
+</mule>
